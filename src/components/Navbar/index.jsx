@@ -13,7 +13,7 @@ import {
 
 import { SearchIcon } from "./search";
 import ThemeSwitch from "../ThemeSwitch";
-import Logo from "../../assets/ms.png";
+import Logo from "../../assets/ms2.png";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiInstance from "../../util/api";
@@ -39,7 +39,7 @@ export default function NavBar() {
       <Navbar maxWidth="full" isBlurred={false} className="py-2 bg-gray-1000">
         <NavbarBrand>
           <div className="flex flex-row place-content-between">
-            <img src={Logo} width="60" />
+            <img src={Logo} width="200" height='100' />
           </div>
         </NavbarBrand>
 
@@ -59,7 +59,7 @@ export default function NavBar() {
 
         <NavbarContent
           as="div"
-          className="items-center mt-2 flex-grow"
+          className="items-center mt-2 flex-grow w-34"
           justify="end">
           <Input
             classNames={{

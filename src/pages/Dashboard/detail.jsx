@@ -25,7 +25,7 @@ export default function Dashboard() {
         .get(`movie/${MovieId}/videos?language=en-US`)
         .then((response) => {
           console.log(response.data.results, "here");
-          setEmpList(response.data.results.filter(el=>el.type === 'Teaser').slice(0,8));
+          setEmpList(response.data.results.slice(0,8));
         });
     };
 
