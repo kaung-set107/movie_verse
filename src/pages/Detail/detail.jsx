@@ -14,10 +14,11 @@ import apiInstance from "../../util/api";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Footer from "../../components/Navbar/footer";
-
+import Logo from "../../assets/ms2.png";
 export default function Dashboard() {
   const MovieId = useLocation().pathname.split("/")[2];
-  console.log(MovieId, "id");
+  const [link, setLink] = useState("");
+  console.log(parseInt(MovieId) === 940721, "id");
   const [empList, setEmpList] = useState([]);
   const [movie, setMovie] = useState([]);
   const [images, setImages] = useState([]);
@@ -36,8 +37,13 @@ export default function Dashboard() {
         .get(`movie/${MovieId}?language=en-US`)
         .then((response) => {
           console.log(response.data, "detail");
-          setMovie(response.data)
+          setMovie(response.data);
           //   setEmpList(response.data.results);
+          setLink(
+            parseInt(MovieId) === 940721
+              ? "https://flixhq.to/movie/watch-godzilla-minus-one-104032"
+              : ""
+          );
         });
     };
 
@@ -53,39 +59,42 @@ export default function Dashboard() {
     getEmployeeLists();
   }, []);
   return (
-    <div className="flex m-10">
-      <div className=" flex-grow">
-        <div className="rounded-lg shadow-md px-10">
-          {" "}
-          <Nav />
-        </div>
-        <div className="body py-1 grid grid-cols-5 gap-2">
-          <Card className="py-4">
-            <CardHeader className="flex flex-row font-semibold rounded-3 justify-center text-2xl">
+    <div className='flex m-10'>
+      <div className=' flex-grow'>
+        <Card className='p-10'>
+          <div className='flex flex-row place-content-between'>
+            <img src={Logo} width='200' height='100' />
+          </div>
+        </Card>
+        <div className='body py-1 grid grid-cols-5 gap-2'>
+          <Card className='py-4'>
+            <CardHeader className='flex flex-row font-semibold rounded-3 justify-center text-2xl'>
               Movie Detail
             </CardHeader>
             <Divider></Divider>
             <CardBody>
-              <div className="ring ring-rose-400 hover:ring-rose-500">
+              <a href={link} className='ring ring-rose-400 hover:ring-rose-500'>
                 <img
                   src={"http://image.tmdb.org/t/p/w500" + movie.poster_path}
-                  className="movie-poster"
+                  className='movie-poster'
                 />
-              </div>
-              <div className="py-5">
+              </a>
+              <div className='py-5'>
                 <div>Genres</div>
 
-                <div className="grid grid-cols-2 gap-1 py-3 text-cyan-50">
-                {console.log(movie,'gen')}
+                <div className='grid grid-cols-2 gap-1 py-3 text-cyan-50'>
+                  {console.log(movie, "gen")}
                   {movie.genres?.map((i) => (
-                    <Button variant="bordered" key={i.id}>{i.name}</Button>
+                    <Button variant='bordered' key={i.id}>
+                      {i.name}
+                    </Button>
                   ))}
                 </div>
               </div>
             </CardBody>
           </Card>
-          <Card className="rounded-md shadow-md py-4 col-span-4">
-            <CardHeader className="flex flex-row font-semibold rounded-3 text-2xl justify-center">
+          <Card className='rounded-md shadow-md py-4 col-span-4'>
+            <CardHeader className='flex flex-row font-semibold rounded-3 text-2xl justify-center'>
               {movie.title}
             </CardHeader>
 
@@ -104,24 +113,26 @@ export default function Dashboard() {
    
 </Card> */}
 
-            <CardBody className="grid grid-cols-3 gap-2 ">
+            <CardBody className='grid grid-cols-3 gap-2 '>
               {empList.map((item, i) => (
-                <div className="block">
+                <div className='block'>
                   <div
-                    className="w-10 md:w-32 lg:w-48 shadow-sm "
-                    key={item.key}>
+                    className='w-10 md:w-32 lg:w-48 shadow-sm '
+                    key={item.key}
+                  >
                     <iframe
                       src={`https://www.youtube.com/embed/${item.key}`}
                       title={item.name}
                       allowFullScreen
-                      className="aspect-square"
+                      className='aspect-square'
                       // style={{ width:'1400px',height:'500px' }}
                     ></iframe>
                   </div>
 
                   <div
                     key={item.key}
-                    className="mt-3 text-center sm:text-left w-41 h-12 overflow-hidden">
+                    className='mt-3 text-center sm:text-left w-41 h-12 overflow-hidden'
+                  >
                     {item.name}
                   </div>
                 </div>
@@ -134,7 +145,7 @@ export default function Dashboard() {
               </div> */}
             </CardBody>
             <Divider></Divider>
-            <CardFooter className="justify-center">
+            <CardFooter className='justify-center'>
               <Footer />
             </CardFooter>
           </Card>
